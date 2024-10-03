@@ -1,4 +1,4 @@
-package com.example.parserforxml;
+package com.example.xmlparser;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
