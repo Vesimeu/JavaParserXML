@@ -43,6 +43,8 @@ public class MainParser {
                 book.setCurrency(extractAttribute(block, "currency", "price"));
                 book.setIsbn(extractTagValue(block, "isbn"));
                 book.setFormat(extractTagValue(block, "format"));
+                book.setLanguage(extractTagValue(block, "language"));
+                book.setTranslator(extractTagValue(block, "translator"));
 
                 // Парсинг издательства, если присутствует
                 if (block.contains("<publisher>")) {
@@ -53,6 +55,34 @@ public class MainParser {
                     address.setCountry(extractTagValue(block, "country"));
                     publisher.setAddress(address);
                     book.setPublisher(publisher);
+                }
+
+                // Парсинг наград, если присутствуют
+                if (block.contains("<awards>")) {
+                    List<String> awards = new ArrayList<>();
+                    String[] awardBlocks = block.split("<award>");
+                    for (String awardBlock : awardBlocks) {
+                        if (awardBlock.contains("</award>")) {
+                            awards.add(awardBlock.substring(0, awardBlock.indexOf("</award>")).trim());
+                        }
+                    }
+                    book.setAwards(awards);
+                }
+
+                // Парсинг рецензий, если присутствуют
+                if (block.contains("<reviews>")) {
+                    List<Review> reviews = new ArrayList<>();
+                    String[] reviewBlocks = block.split("<review>");
+                    for (String reviewBlock : reviewBlocks) {
+                        if (reviewBlock.contains("</review>")) {
+                            Review review = new Review();
+                            review.setUser(extractTagValue(reviewBlock, "user"));
+                            review.setRating(Integer.parseInt(extractTagValue(reviewBlock, "rating")));
+                            review.setComment(extractTagValue(reviewBlock, "comment"));
+                            reviews.add(review);
+                        }
+                    }
+                    book.setReviews(reviews);
                 }
 
                 books.add(book);

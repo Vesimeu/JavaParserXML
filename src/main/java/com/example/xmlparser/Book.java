@@ -49,6 +49,18 @@ public class Book {
     public Publisher getPublisher() { return publisher; }
     public void setPublisher(Publisher publisher) { this.publisher = publisher; }
 
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
+
+    public String getTranslator() { return translator; }
+    public void setTranslator(String translator) { this.translator = translator; }
+
+    public List<String> getAwards() { return awards; }
+    public void setAwards(List<String> awards) { this.awards = awards; }
+
+    public List<Review> getReviews() { return reviews; }
+    public void setReviews(List<Review> reviews) { this.reviews = reviews; }
+
     @Override
     public String toString() {
         return "Book{" +
